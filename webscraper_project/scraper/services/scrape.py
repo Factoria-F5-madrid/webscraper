@@ -3,10 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# Para Chrome
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
 
 def scrape_website():
     # Configurar Selenium
@@ -15,13 +13,10 @@ def scrape_website():
     options.add_argument('--no-sandbox')  # Requerido para algunos servidores
     options.add_argument('--disable-dev-shm-usage')  # Para evitar errores de memoria
 
-    # 🔹 Inicializamos  `service`
-    service = Service(ChromeDriverManager().install())
-
-    # Para Chrome
-    # Selenium Manager se encargará de descargar y gestionar el WebDriver
-    #service = Service()  # No es necesario especificar el ejecutable
-    driver = webdriver.Chrome(service=service, options=options)
+    # Configurar el servicio de GeckoDriver
+    service = Service("/usr/local/bin/geckodriver")
+    # Crear el WebDriver de Firefox
+    driver = webdriver.Firefox(service=service, options=options)
 
     # Navegar al sitio web
     url = "https://jorgebenitezlopez.com"
