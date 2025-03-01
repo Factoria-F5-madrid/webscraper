@@ -322,6 +322,7 @@ Scraped Data: [{'title': '👋 Hello!', 'url': 'https://factoriaf5.org/somos/#eq
 Scraping completed!
 
 docker exec -it webscraper-server-1 bash
+cd webscraper_project
 ls -l db.sqlite3
 apt-get update && apt-get install -y sqlite3
 sqlite3 db.sqlite3
@@ -340,3 +341,62 @@ tienen que exisitir
 docker exec -it name /usr/local/bin/geckodriver --log debug (Dejar abierta esta ventana para ver errores)
 ```
 
+## Tercer paso: Cronjob
+
+Para automatizar la acción
+
+- Crear un archivo cronfile. Este es un cron job en Linux, que programa la ejecución periódica de un script en Python: ``touch cronfile``
+- >> /var/log/cron.log → Agrega la salida estándar (stdout) al archivo de log /var/log/cron.log (sin sobrescribirlo).
+
+```bash
+*/5 * * * * /usr/local/bin/python /app/webscraper_project/manage.py scraper >> /var/log/cron.log 2>&1
+
+```
+
+- En el docker file
+
+```bash
+# Instalar cron y herramientas adicionales
+RUN apt-get update && apt-get install -y \
+    cron \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+# Crear directorios necesarios y asignar permisos para cron
+RUN mkdir -p /var/run /var/log && \
+    chmod 0755 /var/run /var/log && \
+    touch /var/run/crond.pid && \
+    chmod 0644 /var/run/crond.pid && \
+    touch /var/log/cron.log && \
+    chmod 0644 /var/log/cron.log
+
+# Copia el archivo local cronfile (que contiene las reglas de cron) al directorio /etc/cron.d/ con el nombre scrape-cron.
+COPY cronfile /etc/cron.d/scrape-cron
+
+# Dar permisos adecuados al cronfile
+RUN chmod 0644 /etc/cron.d/scrape-cron
+
+# Registrar el cronjob
+RUN crontab /etc/cron.d/scrape-cron
+```
+
+y cambio el final de docker file para que ejecute el comando del docker
+
+```bash
+CMD ["cron", "-f"]
+```
+
+- Para listarlo:
+
+```bash
+docker ps
+docker exec -it webscraper-server-1 crontab -l
+docker exec -it webscraper-server-1 service cron status
+
+docker exec -it name bash
+cd.. (A directorio raiz)
+cat /var/log/cron.log
+```
+
+- Ejecutar el comando: docker exec -it webscraper-server-1 /usr/local/bin/python webscraper_project/manage.py scraper
+- Comprobar la BBDD con antes

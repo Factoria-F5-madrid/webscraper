@@ -39,9 +39,32 @@ RUN apt-get update && apt-get install -y \
     libpci3 \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y \
+    cron \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
 # Configure Fontconfig to avoid cache errors
 RUN mkdir -p /tmp/cache/fontconfig && chmod 777 /tmp/cache/fontconfig
 ENV FONTCONFIG_PATH=/tmp/cache/fontconfig
+
+RUN mkdir -p /var/run /var/log && \
+    chmod 0755 /var/run /var/log && \
+    touch /var/run/crond.pid && \
+    chmod 0644 /var/run/crond.pid && \
+    touch /var/log/cron.log && \
+    chmod 0644 /var/log/cron.log
+
+# Copia el archivo local cronfile (que contiene las reglas de cron) al directorio /etc/cron.d/ con el nombre scrape-cron.
+COPY cronfile /etc/cron.d/scrape-cron
+# Agregar una nueva línea al final si falta
+RUN echo "" >> /etc/cron.d/scrape-cron 
+
+# Dar permisos adecuados al cronfile
+RUN chmod 0644 /etc/cron.d/scrape-cron
+
+# Registrar el cronjob
+RUN crontab /etc/cron.d/scrape-cron
 
 # Assign a valid home directory to appuser
 # RUN usermod -d /home/appuser appuser && mkdir -p /home/appuser && chown appuser:appuser /home/appuser
@@ -76,5 +99,4 @@ COPY . .
 # Expose the port used by the application
 EXPOSE 8000
 
-# Default command to keep the container running
-CMD ["tail", "-f", "/dev/null"]
+CMD ["cron", "-f"]
