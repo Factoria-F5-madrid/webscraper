@@ -320,5 +320,23 @@ docker exec -it webscraper-server-1 /usr/local/bin/python webscraper_project/man
 Scraped data: [{'title': '👋 Hello!', 'url': 'https://factoriaf5.org/somos/#equipo'}, {'title': '', 'url': 'https://cristinamaser.com/'}]
 Scraped Data: [{'title': '👋 Hello!', 'url': 'https://factoriaf5.org/somos/#equipo'}, {'title': '', 'url': 'https://cristinamaser.com/'}]
 Scraping completed!
+
+docker exec -it webscraper-server-1 bash
+ls -l db.sqlite3
+apt-get update && apt-get install -y sqlite3
+sqlite3 db.sqlite3
+.tables
+SELECT * FROM scraper_scrapeddata;
+```
+
+En el caso de que falle firefox. Consejos para depurar:
+
+```bash
+docker ps (cogemos name del contenedor)
+docker exec -it name bash (para acceder y analizar la estructura de carpetas y que existe geckodriver y firefox)
+appuser@4f2e7276d3cc:/app$ which geckodriver
+appuser@4f2e7276d3cc:/app$ which firefox
+tienen que exisitir
+docker exec -it name /usr/local/bin/geckodriver --log debug (Dejar abierta esta ventana para ver errores)
 ```
 
