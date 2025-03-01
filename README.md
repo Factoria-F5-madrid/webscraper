@@ -75,7 +75,7 @@ class ScrapedData(models.Model):
 
 - Dentro de scraper
 - Creo mkdir services
--  touch __init__.py (para que lo pille como módulo)
+-  touch ``__init__.py`` (para que lo pille como módulo)
 - Creo el scrape.py con este contenido
 
 ```python
@@ -133,9 +133,9 @@ def scrape_website():
 ```
 
 - Repasamos  el scraper: crea navegaodor, carga página y saca datos...
-- Ahora que tenemos el scraper vamos a crear un comando para activarlo. ¿Que es un comando? Generalmente disparamos acciones cuando una rul recibe una petición; pero también podemos crear nuestros propios comandos para disparar acciones..
+- Ahora que tenemos el scraper vamos a crear un comando para activarlo. ¿Que es un comando? Generalmente disparamos acciones cuando una rul recibe una petición; pero también podemos crear nuestros propios comandos para disparar acciones.
 
-- Dentro de scraper creo management/commands y un archivo scrape.py  (Importante los ___init__.py en management y commands). El contenido del comando es el siguiente:
+- Dentro de scraper creo management/commands y un archivo scrape.py  (Importante los ``___init__.py`` en management y commands). El contenido del comando es el siguiente:
 
 ```python
 from django.core.management.base import BaseCommand
@@ -173,7 +173,7 @@ class Command(BaseCommand):
 
 - docker compose up --build # no funciona porque da problemas con el chrome, vamos autilizar el Firefox, instalarlo en el dockerfile y camibar el comando de ejecución.
 
-dockerfile
+- dockerfile
 ```bash
 # syntax=docker/dockerfile:1
 
@@ -257,7 +257,7 @@ EXPOSE 8000
 CMD ["tail", "-f", "/dev/null"]
 ```
 
-y el scraper
+- y el scraper
 
 ```python
 from selenium import webdriver
@@ -310,7 +310,7 @@ def scrape_website():
 
 - Ahora el contenedor se queda activado
 - Instala diferentes versiones del navegador dependiendo del tipo de imagen
-- Compruebo
+- Compruebo que funciona
 ```bash
 docker ps
 docker exec -it name bash
@@ -330,7 +330,7 @@ sqlite3 db.sqlite3
 SELECT * FROM scraper_scrapeddata;
 ```
 
-En el caso de que falle firefox. Consejos para depurar:
+- En el caso de que falle firefox. Consejos para depurar:
 
 ```bash
 docker ps (cogemos name del contenedor)
@@ -346,11 +346,10 @@ docker exec -it name /usr/local/bin/geckodriver --log debug (Dejar abierta esta 
 Para automatizar la acción
 
 - Crear un archivo cronfile. Este es un cron job en Linux, que programa la ejecución periódica de un script en Python: ``touch cronfile``
-- >> /var/log/cron.log → Agrega la salida estándar (stdout) al archivo de log /var/log/cron.log (sin sobrescribirlo).
+- ``>> /var/log/cron.log`` → Agrega la salida estándar (stdout) al archivo de log /var/log/cron.log (sin sobrescribirlo).
 
 ```bash
 */5 * * * * /usr/local/bin/python /app/webscraper_project/manage.py scraper >> /var/log/cron.log 2>&1
-
 ```
 
 - En el docker file
@@ -380,7 +379,7 @@ RUN chmod 0644 /etc/cron.d/scrape-cron
 RUN crontab /etc/cron.d/scrape-cron
 ```
 
-y cambio el final de docker file para que ejecute el comando del docker
+- y cambio el final de docker file para que ejecute el comando del docker
 
 ```bash
 CMD ["cron", "-f"]
@@ -400,3 +399,9 @@ cat /var/log/cron.log
 
 - Ejecutar el comando: docker exec -it webscraper-server-1 /usr/local/bin/python webscraper_project/manage.py scraper
 - Comprobar la BBDD con antes
+
+## TODO
+
+- Probar en Windows
+- Test 
+- Investigar más selectores y el wait y el Ec de Selenium
