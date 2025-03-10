@@ -405,3 +405,5 @@ cat /var/log/cron.log
 - Probar en Windows
 - Test 
 - Investigar más selectores y el wait y el Ec de Selenium
+- A tener en cuenta: Google o Linkedin permiten un número limitado de Request. Cuidado que puedes perder tu cuenta de Linkedin.
+- Muchas webs incluyen términos de servicio que prohíben explícitamente el scraping. Scrapear sin permiso puede ser considerado ilegal si viola términos de uso o derechos de propiedad intelectual. Muchas webs usan este archivo para definir si permiten o no el scraping automatizado: robots.txt: 
