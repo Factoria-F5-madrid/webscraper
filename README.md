@@ -61,7 +61,6 @@ cat /var/log/cron.log
 
 ## TODO
 
-- Probar en Windows
 - Test 
 - Investigar más selectores y el wait y el Ec de Selenium
 - A tener en cuenta: Google o Linkedin permiten un número limitado de Request. Cuidado que puedes perder tu cuenta de Linkedin.
