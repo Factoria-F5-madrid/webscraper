@@ -1,26 +1,25 @@
-## Django Screper
+## Django Scraper
 
 ## Primer paso: Scraper con comando
 
-- mkdir webscraper
-- cd webscraper
-- git init
-- touch README.md (https://www.toptal.com/developers/gitignore)
-- python3 -m venv env
-- source env/bin/activate
-- pip install django
-- pip freeze > requirements.txt
-- cat requirements.txt
-- django-admin startproject webscraper_project
-- tree -I "env"
-- Queda así:
+Te voy a guiar paso a paso en los comandos que tienes que ejecutar en tu consola. Damos por hecho que tienes python instalado. 
+
+- `mkdir webscraper`
+- `cd webscraper`
+- touch `.gitignore`  (Crear readme)
+- Con ayuda de esta página puedes crear gitignore configurando lo que necesitas: Windows y Django por ejemplo: https://www.toptal.com/developers/gitignore)
+- Crear entorno virtual: `python3 -m venv venv` o `python -m venv venv`
+- Levantar entorno virtual: En OSX: `source venv/bin/activate` en Bash: `source venv/Script/active en Bash`
+- (En el entorno virtual) `pip install django`
+- `django-admin startproject webscraper_project`
+- Queda así. (Puedes instalar tree para ver la estructura del proyecto y ejecutar tree -I "venv" para verlo)
 
 ```
-app/                               # Carpeta raíz del proyecto
+webscraper/                               # Carpeta raíz del proyecto
 ├── env/                           # Entorno virtual
 ├── requirements.txt               # Dependencias del proyecto
 └── webscraper_project/      # Carpeta del proyecto Django
-    ├── manage.py                  # Comando principal de Django
+    ├── manage.py                  # Comandos principales de Django
     └── webscraper_project/  # Configuración interna de Django
         ├── __init__.py
         ├── settings.py
@@ -29,14 +28,10 @@ app/                               # Carpeta raíz del proyecto
         └── wsgi.py
 ```
 
-- pip install selenium (Selenium It’s slower than requests and BeautifulSoup because it loads the entire browser)
-- pip install webdriver-manager
-- pip freeze > requirements.txt
-- Para comprobar:
-```bash
-cat requirements.txt (Para revisar)
-python3 -m pip show webdriver-manager
-```
+- `pip install selenium` (Selenium It’s slower than requests and BeautifulSoup because it loads the entire browser)
+- `pip install webdriver-manager`
+- `pip freeze > requirements.txt`
+- Para comprobar: `cat requirements.txt` 
 
 - cd webscraper_project
 - python3 manage.py startapp scraper (Una "app" en Django es un módulo que encapsula cierta funcionalidad de tu proyecto, como el web scraping en este caso)
@@ -53,7 +48,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-- Creo el modelo para guardar info en scraper
+- Creo el modelo para guardar info en scraper. En el archivo scraper>models.py
 
 ```python
 from django.db import models
@@ -71,12 +66,13 @@ class ScrapedData(models.Model):
 - python3 manage.py makemigrations # Donde esté manage
 - python3 manage.py migrate
 
-- Puedo comprobar la estructura en SQlite para ver que todo va bien
+- Puedo comprobar la estructura en SQlite para ver que todo va bien. Por defecto Django trabaja con Sqlite podrias cambiarlo en settings.py
 
-- Dentro de scraper
-- Creo mkdir services
--  touch __init__.py (para que lo pille como módulo)
-- Creo el scrape.py con este contenido
+- Dentro de scraper: cd scraper
+- Creo mkdir services (Un servicio es una función que podemos reutilizar siempre que necesitemos)
+-  touch ``__init__.py`` (para que lo pille como módulo, tiene que estar dentro de services)
+- touch scrape.py (dentro de services)
+- Con este contenido
 
 ```python
 from selenium import webdriver
@@ -132,10 +128,11 @@ def scrape_website():
     return scraped_data
 ```
 
-- Repasamos  el scraper: crea navegaodor, carga página y saca datos...
-- Ahora que tenemos el scraper vamos a crear un comando para activarlo. ¿Que es un comando? Generalmente disparamos acciones cuando una rul recibe una petición; pero también podemos crear nuestros propios comandos para disparar acciones..
+- Repasa el scraper: crea navegador, carga página y saca datos...
 
-- Dentro de scraper creo management/commands y un archivo scrape.py  (Importante los ___init__.py en management y commands). El contenido del comando es el siguiente:
+- Ahora que tenemos el scraper vamos a crear un comando para activarlo. ¿Que es un comando? Generalmente disparamos acciones cuando una url recibe una petición; pero también podemos crear nuestros propios comandos para disparar acciones. 🎯
+
+- Dentro de scraper creo management/commands y un archivo scrape.py  (Importante los ``___init__.py`` en management y commands). El contenido del comando es el siguiente:
 
 ```python
 from django.core.management.base import BaseCommand
@@ -157,5 +154,6 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS("Scraping completed!"))
 
 ```
+- Importa comandos y crea uno sobre BaseCommand, que en definitiva le pone nombre a una acción para poder llamarla
 - Ejecutar comando:  python3 webscraper_project/manage.py scrape
-- Verifico que en la bd está la información
+- Opcionalmente: Verifico que en la bd está la información
