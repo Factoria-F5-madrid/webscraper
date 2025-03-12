@@ -15,7 +15,7 @@
 - ? What is the command you use to run your app? python3 webscraper_project/manage.py scraper 
 ```
 
-- docker compose up --build # no funciona porque da problemas con el chrome, vamos autilizar el Firefox, instalarlo en el dockerfile y camibar el comando de ejecución.
+- docker compose up --build # no funciona porque da problemas con el chrome, vamos autilizar el Firefox, instalarlo en el dockerfile y cambiar el comando de ejecución.
 
 dockerfile
 ```bash
