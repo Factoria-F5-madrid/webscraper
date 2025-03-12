@@ -151,10 +151,11 @@ def scrape_website():
     driver.quit()
     return scraped_data
 ```
-
-- Ahora el contenedor se queda activado
-- Instala diferentes versiones del navegador dependiendo del tipo de imagen
-- Compruebo
+- Este Dockerfile son muchas horas de trabajo: Muchos errores y correcciones
+- El dockerfile ahora hace el contenedor se queda activado
+- El dockerfile ahora instala diferentes versiones del navegador dependiendo del tipo de imagen
+- Levanta con ``docker compose build -up`` o ``docker compose up --build``
+- Para comprobar:
 ```bash
 docker ps
 docker exec -it name bash
