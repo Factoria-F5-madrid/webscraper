@@ -2,6 +2,10 @@
 
 ## Segundo paso: Docker y firefox
 
+- Entiendo que tienes instalado docker...
+
+- En el directorio raiz del proyecto
+
 - docker init
 
 ```bash
