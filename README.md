@@ -70,7 +70,7 @@ class ScrapedData(models.Model):
 
 - Dentro de scraper: cd scraper
 - Creo mkdir services (Un servicio es una función que podemos reutilizar siempre que necesitemos)
--  touch ``__init__.py`` (para que lo pille como módulo, tiene que estar dentro de services)
+-  touch ``__init__.py`` (Crear archivo: para que lo pille como módulo, tiene que estar dentro de services)
 - touch scrape.py (dentro de services)
 - Con este contenido
 
