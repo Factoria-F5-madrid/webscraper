@@ -11,6 +11,8 @@ Para automatizar la acción
 */5 * * * * /usr/local/bin/python /app/webscraper_project/manage.py scrape >> /var/log/cron.log 2>&1
 ```
 
+- El cron tiene que tener un esp
+
 - En el docker file
 
 ```bash
