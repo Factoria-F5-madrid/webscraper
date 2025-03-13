@@ -12,7 +12,7 @@
 - ? What application platform does your project use? Python
 - ? What version of Python do you want to use? 3.11.11 (¿python3 --version?)
 - ? What port do you want your app to listen on? 8000
-- ? What is the command you use to run your app? python3 webscraper_project/manage.py scraper 
+- ? What is the command you use to run your app? python3 webscraper_project/manage.py scrape
 ```
 
 - docker compose up --build # no funciona porque da problemas con el chrome, vamos autilizar el Firefox, instalarlo en el dockerfile y cambiar el comando de ejecución.
