@@ -8,7 +8,7 @@ Para automatizar la acción
 - ``>> /var/log/cron.log`` → Agrega la salida estándar (stdout) al archivo de log /var/log/cron.log (sin sobrescribirlo).
 
 ```bash
-*/5 * * * * /usr/local/bin/python /app/webscraper_project/manage.py scraper >> /var/log/cron.log 2>&1
+*/5 * * * * /usr/local/bin/python /app/webscraper_project/manage.py scrape >> /var/log/cron.log 2>&1
 ```
 
 - En el docker file
