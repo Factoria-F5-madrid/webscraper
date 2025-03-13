@@ -6,7 +6,7 @@ Te voy a guiar paso a paso en los comandos que tienes que ejecutar en tu consola
 
 - `mkdir webscraper`
 - `cd webscraper`
-- touch `.gitignore`  (Crear readme)
+- touch `.gitignore`  (Crear gitignore)
 - Con ayuda de esta página puedes crear gitignore configurando lo que necesitas: Windows y Django por ejemplo: https://www.toptal.com/developers/gitignore)
 - Crear entorno virtual: `python3 -m venv venv` o `python -m venv venv`
 - Levantar entorno virtual: En OSX: `source venv/bin/activate` en Bash: `source venv/Script/active en Bash`
