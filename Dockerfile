@@ -55,6 +55,9 @@ RUN mkdir -p /var/run /var/log && \
     touch /var/log/cron.log && \
     chmod 0644 /var/log/cron.log
 
+# Create screenshots directory and set permissions
+RUN mkdir -p /app/screenshots && chmod 777 /app/screenshots
+
 # Copia el archivo local cronfile (que contiene las reglas de cron) al directorio /etc/cron.d/ con el nombre scrape-cron.
 COPY cronfile /etc/cron.d/scrape-cron
 # Agregar una nueva línea al final si falta
@@ -98,5 +101,8 @@ COPY . .
 
 # Expose the port used by the application
 EXPOSE 8000
+
+# Create volume for screenshots
+VOLUME ["/app/screenshots"]
 
 CMD ["cron", "-f"]

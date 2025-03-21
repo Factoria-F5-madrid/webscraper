@@ -2,11 +2,17 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
+import os
+from datetime import datetime
 
 def scrape_website():
+    # Configurar directorio para screenshots - Usar ruta absoluta al volumen
+    screenshots_dir = "/app/screenshots"
+    if not os.path.exists(screenshots_dir):
+        os.makedirs(screenshots_dir)
+
     # Configurar Selenium
     options = Options()
     options.add_argument('--headless')  # Ejecutar en modo headless
@@ -22,15 +28,23 @@ def scrape_website():
     url = "https://jorgebenitezlopez.com"
     driver.get(url)
     print(driver.title)  
-# Esperar a que los elementos estén presentes
+
+    # Esperar a que los elementos estén presentes
     try:
         WebDriverWait(driver, 10).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, "h1"))
         )
+        
+        # Tomar captura de pantalla con timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        screenshot_path = os.path.join(screenshots_dir, f"captura_{timestamp}.png")
+        driver.save_screenshot(screenshot_path)
+        print(f"Captura de pantalla guardada en: {screenshot_path}")
+
         titles = driver.find_elements(By.CSS_SELECTOR, "h1")
         urls = driver.find_elements(By.CSS_SELECTOR, "a")
     except Exception as e:
-        print("Error al encontrar los elementos:", e)
+        print("Error al encontrar los elementos o al tomar la captura:", e)
         driver.quit()
         return []
 
