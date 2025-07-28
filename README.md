@@ -9,10 +9,10 @@ Te voy a guiar paso a paso en los comandos que tienes que ejecutar en tu consola
 - touch `.gitignore`  (Crear gitignore)
 - Con ayuda de esta página puedes crear gitignore configurando lo que necesitas: Windows y Django por ejemplo: https://www.toptal.com/developers/gitignore)
 - Crear entorno virtual: `python3 -m venv venv` o `python -m venv venv`
-- Levantar entorno virtual: En OSX: `source venv/bin/activate` en Bash: `source venv/Script/active en Bash`
+- Levantar entorno virtual: En OSX: `source venv/bin/activate` en Bash: `source venv/Script/active`
 - (En el entorno virtual) `pip install django`
 - `django-admin startproject webscraper_project`
-- Queda así. (Puedes instalar tree para ver la estructura del proyecto y ejecutar tree -I "venv" para verlo)
+- Queda así. (Extra: Puedes instalar tree para ver la estructura del proyecto y ejecutar tree -I "venv" para verlo. https://en.wikipedia.org/wiki/Tree_(command))
 
 ```
 webscraper/                               # Carpeta raíz del proyecto
@@ -63,14 +63,14 @@ class ScrapedData(models.Model):
         return self.title
 ```
 
-- python3 manage.py makemigrations # Donde esté manage
+- python3 manage.py makemigrations (Ejecuta los comandos donde esté el manage.py)
 - python3 manage.py migrate
 
-- Puedo comprobar la estructura en SQlite para ver que todo va bien. Por defecto Django trabaja con Sqlite podrias cambiarlo en settings.py
+- Puedo comprobar la estructura en SQlite para ver que todo va bien con https://sqlitebrowser.org/ (Por defecto Django trabaja con Sqlite podrias cambiarlo en settings.py)
 
 - Dentro de scraper: cd scraper
-- Creo mkdir services (Un servicio es una función que podemos reutilizar siempre que necesitemos)
--  touch ``__init__.py`` (Crear archivo: para que lo pille como módulo, tiene que estar dentro de services)
+- Creo mkdir services (Un servicio es una función que podemos reutilizar siempre que necesitemos. Recuerda el principio DRY. Varios controladores/vistas pueden necesita una función. En lugar de repetirnos y crear la misma función función la metemos en un servicio y la llamamamos)
+- touch ``__init__.py`` (Crear archivo: para que lo pille como módulo, tiene que estar dentro de services)
 - touch scrape.py (dentro de services)
 - Con este contenido
 
@@ -130,7 +130,7 @@ def scrape_website():
 
 - Repasa el scraper: crea navegador, carga página y saca datos...
 
-- Ahora que tenemos el scraper vamos a crear un comando para activarlo. ¿Que es un comando? Generalmente disparamos acciones cuando una url recibe una petición; pero también podemos crear nuestros propios comandos para disparar acciones. 🎯
+- Ahora que tenemos el scraper vamos a crear un comando para activarlo. ¿Que es un comando? Generalmente disparamos acciones cuando una url recibe una petición; pero también podemos crear nuestros propios comandos para disparar acciones cuando queramos sin depender de un usuario. 🎯
 
 - Dentro de scraper creo management/commands y un archivo scrape.py  (Importante los ``___init__.py`` en management y commands). El contenido del comando es el siguiente:
 
@@ -156,4 +156,5 @@ class Command(BaseCommand):
 ```
 - Importa comandos y crea uno sobre BaseCommand, que en definitiva le pone nombre a una acción para poder llamarla
 - Ejecutar comando:  python3 webscraper_project/manage.py scrape
-- Opcionalmente: Verifico que en la bd está la información
+- Verifico que en la bd está la información
+- Extra: Guarda otros datos. Personaliza este scraper para guardar otros datos.
