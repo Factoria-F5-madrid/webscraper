@@ -12,30 +12,13 @@ Te voy a guiar paso a paso en los comandos que tienes que ejecutar en tu consola
 - Levantar entorno virtual: En OSX: `source venv/bin/activate` en Bash: `source venv/Script/active`
 - (En el entorno virtual) `pip install django`
 - `django-admin startproject webscraper_project`
-- Queda así. (Extra: Puedes instalar tree para ver la estructura del proyecto y ejecutar tree -I "venv" para verlo. https://en.wikipedia.org/wiki/Tree_(command))
-
-```
-webscraper/                               # Carpeta raíz del proyecto
-├── env/                           # Entorno virtual
-├── requirements.txt               # Dependencias del proyecto
-└── webscraper_project/      # Carpeta del proyecto Django
-    ├── manage.py                  # Comandos principales de Django
-    └── webscraper_project/  # Configuración interna de Django
-        ├── __init__.py
-        ├── settings.py
-        ├── urls.py
-        ├── asgi.py
-        └── wsgi.py
-```
-
 - `pip install selenium` (Selenium It’s slower than requests and BeautifulSoup because it loads the entire browser)
 - `pip install webdriver-manager`
 - `pip freeze > requirements.txt`
 - Para comprobar: `cat requirements.txt` 
-
 - cd webscraper_project
 - python3 manage.py startapp scraper (Una "app" en Django es un módulo que encapsula cierta funcionalidad de tu proyecto, como el web scraping en este caso)
-- Añado scraper en setting.py
+- Añado scraper en setting.py del proyecto
 ```bash
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -69,9 +52,9 @@ class ScrapedData(models.Model):
 - Puedo comprobar la estructura en SQlite para ver que todo va bien con https://sqlitebrowser.org/ (Por defecto Django trabaja con Sqlite podrias cambiarlo en settings.py)
 
 - Dentro de scraper: cd scraper
-- Creo mkdir services (Un servicio es una función que podemos reutilizar siempre que necesitemos. Recuerda el principio DRY. Varios controladores/vistas pueden necesita una función. En lugar de repetirnos y crear la misma función función la metemos en un servicio y la llamamamos)
-- touch ``__init__.py`` (Crear archivo: para que lo pille como módulo, tiene que estar dentro de services)
-- touch scrape.py (dentro de services)
+- Creo `mkdir services` (Un servicio es una función que podemos reutilizar siempre que necesitemos. Recuerda el principio DRY. Varios controladores/vistas pueden necesita una función. En lugar de repetirnos y crear la misma función función la metemos en un servicio y la llamamamos)
+- `touch __init__.py` (Crear archivo: para que lo pille como módulo, tiene que estar dentro de services)
+- `touch scrape.py` (dentro de services)
 - Con este contenido
 
 ```python
@@ -132,7 +115,7 @@ def scrape_website():
 
 - Ahora que tenemos el scraper vamos a crear un comando para activarlo. ¿Que es un comando? Generalmente disparamos acciones cuando una url recibe una petición; pero también podemos crear nuestros propios comandos para disparar acciones cuando queramos sin depender de un usuario. 🎯
 
-- Dentro de scraper creo management/commands y un archivo scrape.py  (Importante los ``___init__.py`` en management y commands). El contenido del comando es el siguiente:
+- Dentro de scraper creo management/commands (`mkdir -p management/commands`) y un archivo scrape.py  (Importante los ``___init__.py`` en management y commands). El contenido del comando es el siguiente:
 
 ```python
 from django.core.management.base import BaseCommand
@@ -155,6 +138,6 @@ class Command(BaseCommand):
 
 ```
 - Importa comandos y crea uno sobre BaseCommand, que en definitiva le pone nombre a una acción para poder llamarla
-- Ejecutar comando:  python3 webscraper_project/manage.py scrape
+- Ejecutar comando:  python3 manage.py scrape
 - Verifico que en la bd está la información
-- Extra: Guarda otros datos. Personaliza este scraper para guardar otros datos.
+- Extra: Personaliza este scraper para guardar otros datos.
