@@ -1,6 +1,6 @@
 ## Django Scraper
 
-## Primer paso: Scraper con comando
+## Primer paso: Scraper en un servicio activado con comando en Django
 
 Te voy a guiar paso a paso en los comandos que tienes que ejecutar en tu consola. Damos por hecho que tienes python instalado. 
 
