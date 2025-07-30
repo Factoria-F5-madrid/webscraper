@@ -2,7 +2,7 @@
 
 ## Segundo paso: Docker y firefox
 
-- Entiendo que tienes instalado docker...
+- Entiendo que tienes instalado docker... actívalo
 
 - En el directorio raiz del proyecto
 
@@ -15,7 +15,7 @@
 - ? What is the command you use to run your app? python3 webscraper_project/manage.py scrape
 ```
 
-- docker compose up --build # no funciona porque da problemas con el chrome, vamos autilizar el Firefox, instalarlo en el dockerfile y cambiar el comando de ejecución.
+- docker compose up --build # no funciona porque da problemas con el chrome (no está instalado en el contenedor), vamos autilizar el Firefox, instalarlo en el dockerfile y cambiar el comando de ejecución.
 
 dockerfile
 ```bash
@@ -101,7 +101,15 @@ EXPOSE 8000
 CMD ["tail", "-f", "/dev/null"]
 ```
 
-y el scraper
+Cambios realizados:
+- Instalas lo que necesitas
+- Multiarquitectura y el firefox que instalas depende de la arquitectura
+- Permites la escritura de squlite
+- Comando para que no se cierre el contenedor
+
+PD: Este Dockerfile son muchas horas de trabajo: Mucha prueba y error
+  
+y modificamos el servicio para que utilice firefox
 
 ```python
 from selenium import webdriver
@@ -151,28 +159,29 @@ def scrape_website():
     driver.quit()
     return scraped_data
 ```
-- Este Dockerfile son muchas horas de trabajo: Muchos errores y correcciones
-- El dockerfile ahora hace el contenedor se queda activado
-- El dockerfile ahora instala diferentes versiones del navegador dependiendo del tipo de imagen
-- Levanta con ``docker compose build -up`` o ``docker compose up --build``
+
+- Levanta con ``docker compose build -up``
+  
 - Para comprobar:
 ```bash
-docker ps
-docker exec -it name bash
-docker exec -it webscraper-server-1 /usr/local/bin/python webscraper_project/manage.py scrape
+docker ps #listamos nombre de contenedor
+docker exec -it webscraper-server-1 /usr/local/bin/python webscraper_project/manage.py  #Entramos al contenedor y ejecutamos el comando manualmente. Importante ubivcar Python y el manage.py correctamente
 (si necesitas inatalar python: apt-get python)
 
+#Al ejecturar el comando debería devolverte esto
 👋 Shall we take a look around?
 Scraped data: [{'title': '👋 Hello!', 'url': 'https://factoriaf5.org/somos/#equipo'}, {'title': '', 'url': 'https://cristinamaser.com/'}]
 Scraped Data: [{'title': '👋 Hello!', 'url': 'https://factoriaf5.org/somos/#equipo'}, {'title': '', 'url': 'https://cristinamaser.com/'}]
 Scraping completed!
 
+#Vamos a revisar la base de datos
 docker exec -it webscraper-server-1 bash
-ls -l db.sqlite3
+#Navegamos hasta donde está el sqlite3
+#Instalamos en el contenedor sqlite3 para acceder a los datos
 apt-get update && apt-get install -y sqlite3
 sqlite3 db.sqlite3 (Asegurate que estás en webscraper_project)
-.tables
-SELECT * FROM scraper_scrapeddata;
+sqlite> .tables
+sqlite> SELECT * FROM scraper_scrapeddata;
 ```
 
 En el caso de que falle Firefox. Consejos para depurar:
