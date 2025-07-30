@@ -52,8 +52,8 @@ Importante: Revisa el dockerfile del proyecto completo: https://github.com/Facto
 
 ```bash
 docker ps
-docker exec -it webscraper-server-1 crontab -l
-docker exec -it webscraper-server-1 service cron status
+docker exec -it name crontab -l # tiene que listar tu cron
+docker exec -it name service cron status # tiene que devolverte: cron is running.
 
 docker exec -it name bash
 cd.. (A directorio raiz)
