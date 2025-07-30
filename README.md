@@ -46,6 +46,8 @@ RUN crontab /etc/cron.d/scrape-cron
 CMD ["cron", "-f"]
 ```
 
+Importante: Revisa el dockerfile del proyecto completo: https://github.com/Factoria-F5-madrid/webscraper/blob/cronjob/Dockerfile
+
 - Para listarlo:
 
 ```bash
