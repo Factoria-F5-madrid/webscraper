@@ -115,7 +115,7 @@ def scrape_website():
 
 - Ahora que tenemos el scraper vamos a crear un comando para activarlo. ¿Que es un comando? Generalmente disparamos acciones cuando una url recibe una petición; pero también podemos crear nuestros propios comandos para disparar acciones cuando queramos sin depender de un usuario. 🎯
 
-- Dentro de scraper creo management/commands (`mkdir -p management/commands`) y un archivo scrape.py  (Importante los ``___init__.py`` en management y commands). El contenido del comando es el siguiente:
+- Dentro de scraper creo management/commands (`mkdir -p management/commands`) y un archivo scraper.py  (Importante los ``___init__.py`` en management y commands). El contenido del comando es el siguiente:
 
 ```python
 from django.core.management.base import BaseCommand
@@ -138,6 +138,6 @@ class Command(BaseCommand):
 
 ```
 - Importa comandos y crea uno sobre BaseCommand, que en definitiva le pone nombre a una acción para poder llamarla
-- Ejecutar comando:  python3 manage.py scrape
+- Ejecutar comando:  python3 manage.py scraper
 - Verifico que en la bd está la información
 - Extra: Personaliza este scraper para guardar otros datos.
