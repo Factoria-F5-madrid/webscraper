@@ -9,9 +9,10 @@ Para automatizar la acción
 
 ```bash
 */5 * * * * /usr/local/bin/python /app/webscraper_project/manage.py scrape >> /var/log/cron.log 2>&1
-```
 
-- El cron tiene que tener un esp
+```
+- Comentario: >> /var/log/cron.log Agrega la salida estándar (stdout) del comando al archivo /var/log/cron.log, sin sobrescribirlo
+- Comentario: Cuando editas un archivo cron (ya sea con crontab -e o importando un archivo con crontab cronfile), es importante que el archivo termine con un salto de línea. El salto de línea final indica que la última línea del cron está completa y debe ser interpretada. Si falta, el último cron job podría no registrarse ni ejecutarse correctamente.
 
 - En el docker file
 
