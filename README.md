@@ -5,7 +5,6 @@
 Para automatizar la acción
 
 - Crear un archivo cronfile. Este es un cron job en Linux, que programa la ejecución periódica de un script en Python: ``touch cronfile``
-- ``>> /var/log/cron.log`` → Agrega la salida estándar (stdout) al archivo de log /var/log/cron.log (sin sobrescribirlo).
 
 ```bash
 */5 * * * * /usr/local/bin/python /app/webscraper_project/manage.py scrape >> /var/log/cron.log 2>&1
